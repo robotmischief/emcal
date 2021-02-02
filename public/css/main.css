@@ -1,0 +1,72 @@
+/* reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-sky-dark: #040404;
+  --bg-sky-medium: #27183f;
+  --bg-sky-light: #370648;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+.main-container {
+  background: rgb(4, 4, 4); /* fallback */
+  background: linear-gradient(
+    180deg,
+    var(--bg-sky-dark) 0%,
+    var(--bg-sky-medium) 50%,
+    var(--bg-sky-light) 100%
+  );
+  width: 100%;
+  height: 100vh;
+}
+
+.moon-target,
+.moon-cursor {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.moon-aligned {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid yellowgreen;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.show {
+  opacity: 1;
+}
+
+.container-data {
+  font-family: sans-serif;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  color: white;
+  font-size: 48px;
+  justify-content: center;
+  padding: 10px;
+}
+
+.xPos {
+  margin-right: 25px;
+}
