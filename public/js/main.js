@@ -3,6 +3,9 @@ const moonCursorDOM = document.querySelector('.moon-cursor');
 const moonAlignedDOM = document.querySelector('.moon-aligned');
 const xPos = document.querySelector('.xPos');
 const yPos = document.querySelector('.yPos');
+const aCompass = document.querySelector('.aCompass');
+const telescopeDOM = document.querySelector('.telescope img');
+const starDOM = document.querySelector('.star');
 const alignedSound = document.getElementById('spirit-sound');
 
 /*
@@ -15,6 +18,7 @@ function setUpOrientationEvent() {
         //gamma left <> right tilt
         //alpha rotation degrees
       handleTilt(e.beta, e.gamma);
+      handleCompass(e.alpha);
     }, false);
   }
 }
@@ -92,6 +96,26 @@ function giveMoon(gamma) {
 
         return moonPhase;
 }
+
+
+/*
+* @description 
+* @param 
+*/
+function handleCompass(alpha) {
+  compass = Math.abs(alpha - 360);
+  aCompass.textContent = `${compass.toFixed(2)}º`;
+  telescopeDOM.style.transform = `translate(-50%, -50%) rotate(${-compass}deg)`;
+  let starDeg = 0;
+  if ((compass >= 10) && (compass <=180)) {
+    starDeg = 25;
+  }  
+  if ((compass > 180) && (compass <= 350)) {
+    starDeg = -25;
+  }  
+  starDOM.style.transform = `translate(-50%, -350px) rotate(${starDeg}deg)`;
+}
+
 
 /*
 * @description Setup and start listening event when document is loaded

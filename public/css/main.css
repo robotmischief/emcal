@@ -67,6 +67,41 @@ body {
   padding: 10px;
 }
 
-.xPos {
+.xPos,
+.yPos {
   margin-right: 25px;
+}
+
+/* compass styles */
+.compass {
+  border: 1px solid white;
+  border-radius: 50%;
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.star {
+  position: absolute;
+  width: 90px;
+  height: 170px;
+  left: 50%;
+  top: 50%;
+  transform-origin: center bottom;
+  transform: translate(-50%, -350px) rotate(-12deg);
+  transition: transform 1s;
+}
+
+.telescope img {
+  /* border: 1px solid red; */
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  left: 50%;
+  top: 50%;
+  transform-origin: center center;
+  transform: translate(-50%, -50%) rotate(0deg);
 }
