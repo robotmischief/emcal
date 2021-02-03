@@ -62,13 +62,14 @@ body {
   width: 100%;
   display: flex;
   color: white;
-  font-size: 48px;
+  font-size: 28px;
   justify-content: center;
   padding: 10px;
 }
 
 .xPos,
-.yPos {
+.yPos,
+.aCompass {
   margin-right: 25px;
 }
 

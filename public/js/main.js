@@ -7,6 +7,7 @@ const aCompass = document.querySelector('.aCompass');
 const telescopeDOM = document.querySelector('.telescope img');
 const starDOM = document.querySelector('.star');
 const alignedSound = document.getElementById('spirit-sound');
+const latitudeDOM = document.querySelector('.aLatitude');
 
 /*
 * @description Listen to phone orientation changes
@@ -116,10 +117,78 @@ function handleCompass(alpha) {
   starDOM.style.transform = `translate(-50%, -350px) rotate(${starDeg}deg)`;
 }
 
+function getLocation() {
+
+}
+
+function setUpLocation() {
+
+  try {
+      if (navigator.geolocation) {
+          //get location
+          //watch options
+          const watchOptions = {
+            enableHighAccuracy: true,
+            timeout: 30000,
+            maximumAge: 15000
+          };
+          navigator.geolocation.getCurrentPosition(locationSuccess, locationError, watchOptions);
+          const watchID = navigator.geolocation.watchPosition(locationSuccess, locationError, watchOptions);
+      }else{
+          alert("Browser don't support geolocalization");
+      }
+  }
+  catch(error){
+      alert("Couldn't initialize geolocation. Please check connection.");
+      console.log("error", error);
+  }
+}
+/*
+* @description handle location position callback
+*/
+function locationSuccess(positionData) {
+  const latitude = positionData.coords.latitude;
+  const longitude = positionData.coords.longitude;
+  const altitude = positionData.coords.altitude;
+  latitudeDOM.textContent = `${latitude.toFixed(2)}º`;
+  if(latitude < 0){
+    // alert("you are in the south hemisphere");
+    telescopeDOM.src = 'images/compass_telescope_south.svg';
+    console.log('flippea');
+  }else{
+  // alert("you are in the north hemisphere");
+  telescopeDOM.src = 'images/compass_telescope.svg';
+  }
+}
+
+/*
+* @description handle location error callback
+*/
+function locationError(error) {
+  let msg;
+  switch(error.code){
+      case 1:
+          //error PERMISSION DENIED
+          msg = 'please ENABLE geolocation and RELOAD this App';
+          break;
+          
+      case 2:
+          //error POSITION UNAVAILABLE
+          msg = 'there was a problem locating thisdevice. Please check connection.';
+          break;
+          
+      case 3:
+          //TIMEOUT
+          msg = "a lot of time has passed whith out locating the device.";
+          break;
+  }
+  alert(`Oops... ${msg}`);
+}
 
 /*
 * @description Setup and start listening event when document is loaded
 */
 window.addEventListener('load', (e) => {
   setUpOrientationEvent();
+  setUpLocation();
 });
