@@ -2,8 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="theme-color" content="#27183F"/>
+    <link rel="manifest" href="manifest.webmanifest" />
     <link rel="stylesheet" href="css/main.css" />
+    <script src="js/newGeomag.js"></script>
+    <script src="js/wmmacc2.js"></script>
     <script defer src="js/main.js"></script>
     <title>Spirit Test</title>
   </head>
@@ -23,16 +30,63 @@
             <source src="sound/spirit.m4a"></source>
         </audio>
 
-        <div class="compass"></div>
+        <div class="compass">
+          <div class="dial">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
         <div class="telescope"><img src="images/compass_telescope.svg" alt="compass telescope"></div>
         <div class="star"><img src="images/compass_star_align.svg" alt="star align"></div>
+        
+        <div class="container-header">
+          <div class="ui-help"><img src="images/icon_help.svg" alt=""></div>
+          <div class="ui-info"><img src="images/icon_info.svg" alt=""></div>
+        </div>
 
-      <div class="container-data">
-        <div class="xPos">x0</div>
-        <div class="yPos">y0</div>
-        <div class="aCompass">0º</div><br/>
-        <div class="aLatitude">0º</div>
-      </div>
+        <div class="container-data">
+          <div class="ui-hemisphere">hemisphere</div>
+          <div class="ui-latitude">
+            <img class="ui-transporter" src="images/icon_transporter.svg" alt="">
+            <h2 class="ui-latitude-value">0º</h2>
+            <div class="ui-latitude-txt">latitude</div>
+
+            <img class="ui-satellite" src="images/icon_satellite.svg" alt="">
+          </div>
+
+          <div class="ui-declination">
+            <img class="ui-magnet" src="images/icon_magnet.svg" alt="">
+            <h2 class="ui-declination-value">0º</h2>
+            <h2 class="ui-declination-txt">declination</h2>
+          </div>
+        </div>
+
+
+    <div class="modal-info hide">
+      <div class="info-title">Position</div>
+      <div class="info-text">Latitude <span class="latitude">0º</span></div>
+      <div class="info-text">Longitude <span class="longitude">0º</span></div>
+      <div class="info-text">Altitude <span class="altitude">0</span></div>
+      <div class="info-text">Accuracy <span class="accuracy">0</span></div>
+      <div class="info-title">Tilt</div>
+      <div class="info-text">Horizontal <span class="horizontal">0</span></div>
+      <div class="info-text">Vertical <span class="vertical">0</span></div>
+      <div class="info-title">Direction</div>
+      <div class="info-text">Geographical <span class="geographical">0</span></div>
+      <div class="info-text">Celestial <span class="celestial">0</span></div>
+      <div class="info-text">WMM declination <span class="declination">0</span></div>
     </div>
+
+        <!-- service worker -->
+        <script>
+          if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+              navigator.serviceWorker.register("/sw.js");
+            });
+          }
+        </script>
+
   </body>
 </html>

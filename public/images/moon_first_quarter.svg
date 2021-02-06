@@ -4,10 +4,10 @@
 	 viewBox="0 0 180 180" style="enable-background:new 0 0 180 180;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#FFE8A6;}
-	.st1{fill:#3E4347;}
-	.st2{fill:#F2D58B;}
+	.st1{fill:#605175;}
+	.st2{fill:#F4D192;}
 	.st3{fill:#F4DC9F;}
-	.st4{fill:#464D51;}
+	.st4{fill:#6D5C87;}
 </style>
 <title>Asset 4</title>
 <g>
@@ -29,7 +29,7 @@
 		<circle class="st4" cx="111" cy="21.7" r="6"/>
 		<circle class="st4" cx="150" cy="144.1" r="6"/>
 		<circle class="st4" cx="132" cy="151.9" r="12"/>
-		<path class="st4" d="M93.6,17.4c0.4,4.6,0.8,9.9,1.1,15.9C97.4,28.2,97,22,93.6,17.4z"/>
+		<path class="st1" d="M93.6,17.4c0.4,4.6,0.8,9.9,1.1,15.9C97.4,28.2,97,22,93.6,17.4z"/>
 	</g>
 </g>
 </svg>
