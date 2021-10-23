@@ -20,6 +20,10 @@ body {
   overflow: hidden;
 }
 
+a {
+  color: white;
+}
+
 .main-container {
   background: rgb(4, 4, 4); /* fallback */
   background: linear-gradient(
@@ -40,7 +44,6 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  /* z-index: 1000; */
   pointer-events: auto;
 }
 
@@ -51,7 +54,7 @@ body {
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  border: 2px solid yellowgreen;
+  border: 2px solid #33f233;
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 1s;
@@ -108,7 +111,6 @@ body {
 }
 
 .telescope img {
-  /* border: 1px solid red; */
   position: absolute;
   width: 240px;
   height: 240px;
@@ -147,8 +149,9 @@ body {
 
 .dial-aligned {
   width: 4px !important;
+  transform: translateX(-3px);
   height: 40px !important;
-  background-color: yellowgreen !important;
+  background-color: #33f233 !important;
 }
 
 .ui-hemisphere {
@@ -249,6 +252,7 @@ body {
 }
 .hide {
   visibility: hidden;
+  display: none;
 }
 
 .modal-info {
@@ -262,6 +266,7 @@ body {
   border-radius: 10px 0 10px 10px;
   font-family: "Roboto", sans-serif;
   font-size: 14px;
+  visibility: visible;
 }
 .modal-info:before {
   content: "";
@@ -283,4 +288,69 @@ body {
 .modal-info .info-text {
   font-size: 14px;
   font-weight: 300;
+}
+
+.modal-help {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.help-screen-one,
+.help-screen-two,
+.help-screen-three {
+  width: 250px;
+  height: 475px;
+  border-radius: 25px;
+  background-color: rgba(30, 144, 255, 0.8);
+}
+
+.help-title {
+  color: yellow;
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 300;
+  font-size: 28px;
+}
+
+.help-body {
+  color: white;
+  font-weight: 300;
+  font-size: 16px;
+  margin: 10px 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.help-screen-one img {
+  width: 70px;
+  align-self: center;
+  margin: 12px 0;
+}
+
+.help-screen-two img,
+.help-screen-three img {
+  width: 145px;
+  align-self: center;
+  margin: 12px 0;
+}
+
+.help-screen-two p.small {
+  font-size: 16px;
+  margin-bottom: 3px;
+}
+.btn {
+  width: 48px;
+  height: 48px;
+  z-index: 1000;
+  position: relative;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
 }

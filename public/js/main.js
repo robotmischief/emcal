@@ -13,7 +13,7 @@ const uiHemisphereDOM = document.querySelector('.ui-hemisphere');
 const btnHelpDOM = document.querySelector('.ui-help');
 const btnInfoDOM = document.querySelector('.ui-info');
 const modalInfoDOM = document.querySelector('.modal-info');
-//modal info
+// modal detailed info overlay 
 const infoLatitudeDOM = document.querySelector('.info-text .latitude');
 const infoLongitudeDOM = document.querySelector('.info-text .longitude');
 const infoAltitudeDOM = document.querySelector('.info-text .altitude');
@@ -23,25 +23,66 @@ const infoTiltVDOM = document.querySelector('.info-text .vertical');
 const infoGeographicalDOM = document.querySelector('.info-text .geographical');
 const infoCelestialDOM = document.querySelector('.info-text .celestial');
 const infoDeclinationDOM = document.querySelector('.info-text .declination');
+//modal onboarding App help
+const modalHelpDOM = document.querySelector('.modal-help');
+const btnOneDOM = document.querySelector('.btn.one');
+const btnTwoDOM = document.querySelector('.btn.two');
+const btnThreeDOM = document.querySelector('.btn.three');
+helpScreenOneDOM = document.querySelector('.help-screen-one');
+helpScreenTwoDOM = document.querySelector('.help-screen-two');
+helpScreenThreeDOM = document.querySelector('.help-screen-three');
 // variables
 let watchID; //constant location
+let geoOffAlert = false; //fix for watch calling alert notification twice if geolocation is off
 let declination = 0;
 let androidDetected = false;
 let spiritActive = true;
-
 //buttons event listeners
 moonCursorDOM.addEventListener('click', handleSpirit);
-function handleSpirit() {
-  spiritActive =! spiritActive;
-}
 btnHelpDOM.addEventListener('click', handleHelp);
-function handleHelp() {
-  if(!modalInfoDOM.classList.contains('hide')) {modalInfoDOM.classList.add('hide')};
-}
+modalHelpDOM.addEventListener('click', () => {
+  modalHelpDOM.classList.add('hide');
+})
 btnInfoDOM.addEventListener('click', handleInfo);
 function handleInfo() {
   modalInfoDOM.classList.toggle('hide');
 }
+btnOneDOM.addEventListener('click', (e) => {
+  e.stopPropagation();
+  helpScreenOneDOM.classList.add("hide");
+  helpScreenTwoDOM.classList.remove("hide");
+});
+btnTwoDOM.addEventListener('click', (e) => {
+  e.stopPropagation();
+  helpScreenTwoDOM.classList.add("hide");
+  helpScreenThreeDOM.classList.remove("hide");
+});
+btnThreeDOM.addEventListener('click', (e) => {
+  e.stopPropagation();
+  modalHelpDOM.classList.add("hide");
+  helpScreenThreeDOM.classList.add("hide");
+});
+
+
+/*
+* @description activates or desactivates bubble level functionality
+*/
+function handleSpirit() {
+  spiritActive =! spiritActive;
+}
+
+
+/*
+* @description display or hide help modal overlay 
+*/
+function handleHelp() {
+  if(!modalInfoDOM.classList.contains('hide')) {modalInfoDOM.classList.add('hide')};
+  modalHelpDOM.classList.remove('hide');
+  helpScreenOneDOM.classList.remove('hide');
+  helpScreenTwoDOM.classList.add("hide");
+  helpScreenThreeDOM.classList.add("hide");
+}
+
 
 /*
 * @description Handles phone tilt on 2 axis
@@ -52,6 +93,7 @@ function handleTilt(beta, gamma) {
   alignMoon(beta, gamma);
   updateTiltUI(beta, gamma);
 }
+
 
 /*
 * @description Update UI x and y coordinates
@@ -66,6 +108,7 @@ function updateTiltUI(beta, gamma) {
     console.log("not able to tilt");
   }
 }
+
 
 /*
 * @description Move spirit level bubble
@@ -94,33 +137,11 @@ function alignMoon(beta, gamma) {
   }
 }
 
+
 /*
-* @description Pick the moon image to use as the spirit bubble
-* @param {number} gamma Horizontal phone tilt
-* @return {string} moonPhase Relative path to image
+* @description update extra info user interface
+* @param {number} angle (mobile compass magnetic) 
 */
-function giveMoon(gamma) {
-    const moons = [
-        ['moon_waxing_crescent', -30, -20],
-        ['moon_first_quarter', -20, -10],
-        ['moon_waxing_gibbous', -10, -5],
-        ['moon_full', -5 , 5],
-        ['moon_waning_gibbous', 5 , 10],
-        ['moon_third_quarter', 10 , 20],
-        ['moon_waning_crescent', 20, 30]
-    ]
-
-    let moonPhase = "moon_new";
-      for (moon of moons) {
-          if ((gamma >= moon[1]) && (gamma <= moon[2])) {
-            moonPhase = moon[0];
-          }
-        }
-
-        return moonPhase;
-}
-
-
 function updateInfoUIDirection(angle) {
   const geoDir = Math.abs(angle - declination);
   try{
@@ -130,14 +151,15 @@ function updateInfoUIDirection(angle) {
   }catch{
     console.log("no geolocation available");
   }
-
 }
 
+
+/*
+* @description get and watch location if supported
+*/
 function setUpLocation() {
   try {
       if (navigator.geolocation) {
-          //get location
-          //watch options
           const watchOptions = {
             enableHighAccuracy: true,
             timeout: 30000,
@@ -158,6 +180,7 @@ function setUpLocation() {
 
 /*
 * @description handle location position callback
+* @param {object} gpositionData (geolocation)
 */
 function locationSuccess(positionData) {
   const latitude = positionData.coords.latitude;
@@ -174,14 +197,26 @@ function locationSuccess(positionData) {
   updateInfoUIPosition(latitude, longitude, altitude, accuracy)
 }
 
+
+/*
+* @description update the extra info overlay
+* @param {number} latitude
+* @param {number} longitude
+* @param {number} altitude
+* @param {number} accuracy
+*/
 function updateInfoUIPosition(latitude, longitude, altitude, accuracy) {
   infoLatitudeDOM.textContent = `${latitude.toFixed(3)}º`;
   infoLongitudeDOM.textContent = `${longitude.toFixed(3)}º`;
   infoAltitudeDOM.textContent = `${altitude.toFixed(2)} mts.`;
   infoAccuracyDOM.textContent = `${accuracy.toFixed(2)} mts.`;
 }
+
+
 /*
-*
+* @description update the user interface
+* @param {string} hemisphere (N or S)
+* @param {number} latitude (geolocation)
 */
 function updateUIMain(hemisphere, latitude) {
   if (hemisphere === 'S') {
@@ -190,7 +225,6 @@ function updateUIMain(hemisphere, latitude) {
   } else {
     uiHemisphereDOM.textContent = 'Stella Polaris';
   }
-  //new UI data
   uiDeclinationDOM.textContent = `${Math.abs(declination).toFixed(1)}º`;
   if (declination < 0) {
     uiMagnetDOM.style.transform = `rotate(-25deg)`;
@@ -202,9 +236,9 @@ function updateUIMain(hemisphere, latitude) {
 }
 
 
-
 /*
 * @description handle location error callback
+* @param {object} error
 */
 function locationError(error) {
   let msg;
@@ -216,21 +250,56 @@ function locationError(error) {
           
       case 2:
           //error POSITION UNAVAILABLE
-          msg = 'there was a problem locating thisdevice. Please check connection.';
+          msg = 'there was a problem locating this device. Please check the connection.';
           break;
           
       case 3:
           //TIMEOUT
-          msg = "a lot of time has passed whith out locating the device.";
+          msg = "a lot of time has passed with out locating the device.";
           break;
   }
-  alert(`Oops... ${msg}`);
+  if (!geoOffAlert) {
+    alert(`Oops... ${msg}`);
+    geoOffAlert = true;
+    handlePermission();
+  }
 }
 
 
+function handlePermission() {
+  navigator.permissions.query({name:'geolocation'}).then(function(result) {
+    if (result.state == 'granted') {
+      report(result.state);
+    } else if (result.state == 'prompt') {
+      report(result.state);
+      navigator.geolocation.getCurrentPosition(revealPosition,positionDenied,geoSettings);
+    } else if (result.state == 'denied') {
+      report(result.state);
+    }
+    result.onchange = function() {
+      report(result.state);
+    }
+  });
+}
+
+function report(state) {
+  console.log('Permission ' + state);
+}
+
+// revokePermission();
+handlePermission();
+
+
+
+function revokePermission() {
+  navigator.permissions.revoke({name:'geolocation'}).then(function(result) {
+    report(result.state);
+  });
+}
 
 /*
-* @description Setup and start listening event when document is loaded
+* @description setup events when document is loaded
+* @param {object} event
 */
 window.addEventListener('load', (e) => {
   checkForAndroid();
@@ -239,9 +308,8 @@ window.addEventListener('load', (e) => {
 });
 
 
-
 /*
-*
+* @description set events listeners for mobile phone movement 
 */
 function setUpOrientationEvent() {
   if (window.DeviceOrientationEvent) {
@@ -279,7 +347,8 @@ function setUpOrientationEvent() {
 
 
 /*
-* 
+* @description handles mobile phone tilt and compass
+* @param {object} event
 */
 function setCompassHeading(e) {
     //beta front <> back tilt
@@ -304,7 +373,8 @@ function setCompassHeading(e) {
 
 
 /*
-*
+* @description Rotates the main telescope
+* @param  {number} alpha (Compass alpha axis degrees)
 */
 function handleTelescope(alpha) {
   angle = (alpha + 360) % 360;
@@ -313,8 +383,10 @@ function handleTelescope(alpha) {
   updateInfoUIDirection(angle);
 }
 
+
 /*
-*
+* @description handles visual reference for when cardinal alignment is done
+* @param {number} angle (compass - declination)
 */
 function handleStar(angle) {
   let starDeg = 0;
@@ -327,7 +399,7 @@ function handleStar(angle) {
     starDeg = 25;
     document.querySelector('.dial span:first-child').classList.remove('dial-aligned');
   }  
-  if ((angleInt > 178) && (angleInt < 182)) {
+  if ((angleInt > -1) && (angleInt < 2)) {
     starDeg = 0;
     try {
       alignedSound.play();
@@ -338,6 +410,8 @@ function handleStar(angle) {
   }  
   starDOM.style.transform = `translate(-50%, -350px) rotate(${starDeg}deg)`;
 }
+
+
 
 ////////////////
 // UTILITIES //
@@ -352,3 +426,29 @@ function checkForAndroid() {
   }
 }
 
+
+/*
+* @description Pick the moon image to use as the spirit bubble
+* @param {number} gamma Horizontal phone tilt
+* @return {string} moonPhase Relative path to image
+*/
+function giveMoon(gamma) {
+  const moons = [
+      ['moon_waxing_crescent', -30, -20],
+      ['moon_first_quarter', -20, -10],
+      ['moon_waxing_gibbous', -10, -5],
+      ['moon_full', -5 , 5],
+      ['moon_waning_gibbous', 5 , 10],
+      ['moon_third_quarter', 10 , 20],
+      ['moon_waning_crescent', 20, 30]
+  ]
+
+  let moonPhase = "moon_new";
+    for (moon of moons) {
+        if ((gamma >= moon[1]) && (gamma <= moon[2])) {
+          moonPhase = moon[0];
+        }
+      }
+
+      return moonPhase;
+}

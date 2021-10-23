@@ -9,7 +9,6 @@
     <meta name="theme-color" content="#27183F"/>
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="stylesheet" href="css/main.css" />
-    <script src="js/newGeomag.js"></script>
     <script src="js/wmmacc2.js"></script>
     <script defer src="js/main.js"></script>
     <title>Spirit Test</title>
@@ -62,7 +61,50 @@
             <h2 class="ui-declination-txt">declination</h2>
           </div>
         </div>
+        
+        <div class="modal-help hide">
 
+          <div class="help-screen-one hide">
+            <div class="help-title">Spirit Level</div>
+            <div class="help-body">
+              <p>Lay the phone flat down on top of the tripod with its screen facing up.</p>
+              <img src="images/help/help_1_tripod.svg" alt="">
+              <p>Adjust the tripod legs until the Moon is centered.
+                You can pause the Moon from moving around
+                by tapping on it.</p>
+                <img src="images/help/help_1_moon.svg" alt="">
+              </div>
+              <img class="btn one" src="images/help/help_next_btn.svg" alt="">
+          </div>
+
+          <div class="help-screen-two hide">
+            <div class="help-title">Compass</div>
+            <div class="help-body">
+              <p>Align the front leg of the tripod with the
+                Celestial Pole.</p>
+                <br/>
+              <p>Please be aware of magnetic interferance
+                around the phone.
+                </p>
+              <img src="images/help/help_2_compass.svg" alt="">
+              <p >The compass compensates declination
+                from the magnetic pole (based on your
+                location and altitude) using the World
+                Magnetic Model provided thanks to <a href="https://ngdc.noaa.gov/geomag/WMM/" target = "_blank">NOAA</a></p>
+              </div>
+              <img class="btn two" src="images/help/help_next_btn.svg" alt="">
+          </div>
+
+          
+          <div class="help-screen-three hide">
+            <div class="help-title">Elevation</div>
+            <div class="help-body">
+              <p>Set the elevation angle of the telescope to match the Latitude indicator</p>
+              <img src="images/help/help_3_transporter.svg" alt="">
+                <img src="images/help/help_3_telescope.svg" alt="">
+            </div>
+            <img class="btn three" src="images/help/help_close_btn.svg" alt="">
+        </div>
 
     <div class="modal-info hide">
       <div class="info-title">Position</div>
@@ -78,6 +120,8 @@
       <div class="info-text">Celestial <span class="celestial">0</span></div>
       <div class="info-text">WMM declination <span class="declination">0</span></div>
     </div>
+
+
 
         <!-- service worker -->
         <script>

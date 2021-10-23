@@ -1,3 +1,11 @@
+/*
+* The World Magnetic Model - License and copyright information
+* The WMM source code is in the public domain and not licensed or under copyright.
+* The information and software may be used freely by the public.
+* As required by 17 U.S.C. 403, third parties producing copyrighted works consisting predominantly of
+* the material produced by U.S. government agencies must provide notice with such work(s) identifying the
+* U.S. Government material incorporated and stating that such material is not subject to copyright protection.
+*/
 //COF DATA
 const COF_DATE = "2020-2025"; //valid date of cof data
 const COF = `2020.0            WMM-2020        12/10/2019
@@ -96,7 +104,11 @@ const COF = `2020.0            WMM-2020        12/10/2019
 
 
 /*
-*
+* @description Calculate diference between geographical north and celestial north
+* @params {number} latitude (from navigator.geolocation)
+* @params {number} longitude (from navigator.geolocation)
+* @params {number} altitude (default 0 - from navigator.geolocation)
+* @return {number} declination (angle that differs - could be positive or negative)
 */
 function calcDeclination(latitude, longitude, altitude = 0) {
     const newGeomag = new Geomag(COF);
@@ -107,6 +119,17 @@ function calcDeclination(latitude, longitude, altitude = 0) {
     return declination;
 }
 
+
+//GeoMag funcion:
+/*	2012-03-26
+    Copyright 2012 Christopher Weiss (cmweiss@gmail.com)
+
+    Suggestions for improvements are appreciated.
+
+    Adapted from the geomagc software and World Magnetic Model of the NOAA
+    Satellite and Information Service, National Geophysical Data Center
+    http://www.ngdc.noaa.gov/geomag/WMM/DoDWMM.shtml
+*/
 function Geomag(model) {
 	'use strict';
 	var wmm,
