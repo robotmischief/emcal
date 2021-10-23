@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap");
+
 /* reset */
 * {
   box-sizing: border-box;
@@ -12,8 +14,14 @@
 }
 
 body {
+  font-family: "Roboto", sans-serif;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
+}
+
+a {
+  color: white;
 }
 
 .main-container {
@@ -36,6 +44,7 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  pointer-events: auto;
 }
 
 .moon-aligned {
@@ -45,10 +54,11 @@ body {
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  border: 2px solid yellowgreen;
+  border: 2px solid #33f233;
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 1s;
+  pointer-events: none;
 }
 
 .show {
@@ -61,12 +71,286 @@ body {
   bottom: 0;
   width: 100%;
   display: flex;
+  flex-direction: column;
   color: white;
-  font-size: 48px;
+  font-size: 22px;
   justify-content: center;
   padding: 10px;
 }
+.container-data-row {
+  display: flex;
+  justify-content: center;
+}
 
-.xPos {
+.container-data-row > * {
   margin-right: 25px;
+}
+
+/* compass styles */
+.compass {
+  border: 1px solid white;
+  border-radius: 50%;
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  width: 90px;
+  height: 170px;
+  left: 50%;
+  top: 50%;
+  transform-origin: center bottom;
+  transform: translate(-50%, -350px) rotate(-12deg);
+  transition: transform 1s;
+}
+
+.telescope img {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  left: 50%;
+  top: 50%;
+  transform-origin: center center;
+  transform: translate(-50%, -50%) rotate(0deg);
+  pointer-events: none;
+}
+
+.dial span {
+  position: absolute;
+  left: 50%;
+  top: -15px;
+  width: 2px;
+  height: 25px;
+  background-color: white;
+  transition: all 1s;
+}
+
+.dial span:nth-child(2) {
+  top: 50%;
+  left: 100%;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.dial span:nth-child(3) {
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+.dial span:nth-child(4) {
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.dial-aligned {
+  width: 4px !important;
+  transform: translateX(-3px);
+  height: 40px !important;
+  background-color: #33f233 !important;
+}
+
+.ui-hemisphere {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-size: 14px;
+  font-style: italic;
+  text-align: center;
+}
+.ui-latitude {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  opacity: 0.7;
+}
+.ui-latitude .ui-transporter {
+  width: 100%;
+  height: 100%;
+  margin-top: 4px;
+}
+
+.ui-latitude-txt {
+  position: absolute;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-size: 14px;
+  right: 7px;
+  bottom: 0;
+}
+.ui-latitude-value {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  position: absolute;
+  right: 2px;
+  bottom: 12px;
+  font-size: 22px;
+}
+
+.ui-satellite {
+  position: absolute;
+  bottom: -20px;
+  left: -45px;
+  width: 25px;
+  transform-origin: 160px bottom;
+  transform: rotate(0deg);
+  transition: transform 2s;
+}
+
+.container-header {
+  opacity: 0.7;
+}
+
+.ui-help {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  left: 10px;
+  top: 10px;
+}
+.ui-info {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  right: 10px;
+  top: 10px;
+}
+
+.ui-declination {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  opacity: 0.7;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+}
+
+.ui-magnet {
+  width: 32px;
+  height: 32px;
+  margin-left: 10px;
+  transform: rotate(0deg);
+  transition: transform 2s;
+}
+.ui-declination-txt {
+  font-weight: 100;
+  font-size: 14px;
+  text-align: center;
+  line-height: 7px;
+  margin-bottom: 5px;
+}
+.ui-declination-value {
+  display: inline;
+  font-weight: 400;
+  font-size: 26px;
+  vertical-align: top;
+}
+.hide {
+  visibility: hidden;
+  display: none;
+}
+
+.modal-info {
+  background-color: rgba(255, 255, 255, 0.9);
+  position: absolute;
+  padding: 5px 10px;
+  width: 180px;
+  height: 255px;
+  right: 28px;
+  top: 60px;
+  border-radius: 10px 0 10px 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  visibility: visible;
+}
+.modal-info:before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -10px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 0px solid transparent;
+  border-bottom: 10px solid rgba(255, 255, 255, 0.9);
+}
+
+.modal-info .info-title {
+  font-weight: 400;
+  margin-top: 12px;
+}
+
+.modal-info .info-text {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.modal-help {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.help-screen-one,
+.help-screen-two,
+.help-screen-three {
+  width: 250px;
+  height: 475px;
+  border-radius: 25px;
+  background-color: rgba(30, 144, 255, 0.8);
+}
+
+.help-title {
+  color: yellow;
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 300;
+  font-size: 28px;
+}
+
+.help-body {
+  color: white;
+  font-weight: 300;
+  font-size: 16px;
+  margin: 10px 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.help-screen-one img {
+  width: 70px;
+  align-self: center;
+  margin: 12px 0;
+}
+
+.help-screen-two img,
+.help-screen-three img {
+  width: 145px;
+  align-self: center;
+  margin: 12px 0;
+}
+
+.help-screen-two p.small {
+  font-size: 16px;
+  margin-bottom: 3px;
+}
+.btn {
+  width: 48px;
+  height: 48px;
+  z-index: 1000;
+  position: relative;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
 }

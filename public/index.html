@@ -2,10 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="theme-color" content="#27183F"/>
+    <link rel="manifest" href="manifest.webmanifest" />
     <link rel="stylesheet" href="css/main.css" />
+    <script src="js/wmmacc2.js"></script>
     <script defer src="js/main.js"></script>
-    <title>Spirit Test</title>
+    <title>emCal Telescope Calibration for Ecuatorial Mounts</title>
+    <meta name="description" content="emCal is a progressive web app that uses the World Magnetic Model to calculate the magnetic declination at the Latitude and Altitude the app is being used and creates a compass that points to the celestial pole instead of the geographical pole.">
   </head>
   <body>
     <div class="main-container">
@@ -23,10 +30,106 @@
             <source src="sound/spirit.m4a"></source>
         </audio>
 
-      <div class="container-data">
-        <div class="xPos">x0</div>
-        <div class="yPos">y0</div>
-      </div>
+        <div class="compass">
+          <div class="dial">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div class="telescope"><img src="images/compass_telescope.svg" alt="compass telescope"></div>
+        <div class="star"><img src="images/compass_star_align.svg" alt="star align"></div>
+        
+        <div class="container-header">
+          <div class="ui-help"><img src="images/icon_help.svg" alt=""></div>
+          <div class="ui-info"><img src="images/icon_info.svg" alt=""></div>
+        </div>
+
+        <div class="container-data">
+          <div class="ui-hemisphere">hemisphere</div>
+          <div class="ui-latitude">
+            <img class="ui-transporter" src="images/icon_transporter.svg" alt="">
+            <h2 class="ui-latitude-value">0º</h2>
+            <div class="ui-latitude-txt">latitude</div>
+
+            <img class="ui-satellite" src="images/icon_satellite.svg" alt="">
+          </div>
+
+          <div class="ui-declination">
+            <img class="ui-magnet" src="images/icon_magnet.svg" alt="">
+            <h2 class="ui-declination-value">0º</h2>
+            <h2 class="ui-declination-txt">declination</h2>
+          </div>
+        </div>
+        
+        <div class="modal-help hide">
+
+          <div class="help-screen-one hide">
+            <div class="help-title">Spirit Level</div>
+            <div class="help-body">
+              <p>Lay the phone flat down on top of the tripod with its screen facing up.</p>
+              <img src="images/help/help_1_tripod.svg" alt="">
+              <p>Adjust the tripod legs until the Moon is centered.
+                You can pause the Moon from moving around
+                by tapping on it.</p>
+                <img src="images/help/help_1_moon.svg" alt="">
+              </div>
+              <img class="btn one" src="images/help/help_next_btn.svg" alt="">
+          </div>
+
+          <div class="help-screen-two hide">
+            <div class="help-title">Compass</div>
+            <div class="help-body">
+              <p>Align the front leg of the tripod with the
+                Celestial Pole.</p>
+                <br/>
+              <p>Please be aware of magnetic interferance
+                around the phone.
+                </p>
+              <img src="images/help/help_2_compass.svg" alt="">
+              <p >The compass compensates declination
+                from the magnetic pole (based on your
+                location and altitude) using the World
+                Magnetic Model provided thanks to <a href="https://ngdc.noaa.gov/geomag/WMM/" target = "_blank">NOAA</a></p>
+              </div>
+              <img class="btn two" src="images/help/help_next_btn.svg" alt="">
+          </div>
+
+          
+          <div class="help-screen-three hide">
+            <div class="help-title">Elevation</div>
+            <div class="help-body">
+              <p>Set the elevation angle of the telescope to match the Latitude indicator</p>
+              <img src="images/help/help_3_transporter.svg" alt="">
+                <img src="images/help/help_3_telescope.svg" alt="">
+            </div>
+            <img class="btn three" src="images/help/help_close_btn.svg" alt="">
+        </div>
+
+    <div class="modal-info hide">
+      <div class="info-title">Position</div>
+      <div class="info-text">Latitude <span class="latitude">0º</span></div>
+      <div class="info-text">Longitude <span class="longitude">0º</span></div>
+      <div class="info-text">Altitude <span class="altitude">0</span></div>
+      <div class="info-text">Accuracy <span class="accuracy">0</span></div>
+      <div class="info-title">Tilt</div>
+      <div class="info-text">Horizontal <span class="horizontal">0</span></div>
+      <div class="info-text">Vertical <span class="vertical">0</span></div>
+      <div class="info-title">Direction</div>
+      <div class="info-text">Geographical <span class="geographical">0</span></div>
+      <div class="info-text">Celestial <span class="celestial">0</span></div>
+      <div class="info-text">WMM declination <span class="declination">0</span></div>
     </div>
+
+        <!-- service worker -->
+        <script>
+          if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+              navigator.serviceWorker.register("/sw.js");
+            });
+          }
+        </script>
+
   </body>
 </html>
